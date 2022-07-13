@@ -9,6 +9,7 @@ const user = new Schema({
     fullName : {type: String, required: true, default : 'user', minlength: 3, maxlength: 50},
     phone : {type: String},
     address : {type: String},
+    type: {type: Number, required: true, default: 0}, // 0: user, 1: admin
 },
 {
     timestamps: true

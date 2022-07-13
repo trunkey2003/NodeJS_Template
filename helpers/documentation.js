@@ -1,5 +1,15 @@
+const exampleUser = {
+    userName: "user",
+    avatar: "https://trunkey2003.github.io/general-img/default-profile-pic.jpg",
+    email: "user@user.com",
+    fullName: "user",
+    phone: "0912345678",
+    address: "number street, ward, city, country",
+    type: 0,
+};
+
 const swaggerDocumentation = {
-    openapi: "3.0.1",
+    openapi: "3.0.0",
     info: {
         title: 'API Documentation',
         version: '1.0.0',
@@ -15,31 +25,79 @@ const swaggerDocumentation = {
             description: 'production'
         }
     ],
+    components: {
+        schemas: {
+            User: {
+                type: 'object',
+                properties: {
+                    _id: { type: 'string', format: 'objectid' },
+                    userName: { type: 'string', minlength: 3, maxlength: 20 },
+                    avatar: { type: 'string', default: "https://trunkey2003.github.io/general-img/default-profile-pic.jpg" },
+                    email: { type: 'string', required: true },
+                    fullName: { type: 'string', minlength: 3, maxlength: 50 },
+                    phone: { type: 'string' },
+                    address: { type: 'string' },
+                    type: { type: 'number', default: 0 }, // 0: user, 1: admin
+                }
+            },
+        }
+    },
     paths: {
         "/api/v1/users": {
             get: {
                 tags: ["users"],
-                description: "List of the users",
+                description: "List of the users, requires admin role",
                 responses: {
                     200: {
                         description: "Success",
                         content: {
                             "application/json": {
                                 schema: {
-                                    type: "array",
+                                    type: 'array',
+                                    items: {
+                                        $ref: "#/components/schemas/User"
+                                    }
                                 },
                                 example: [
-                                    {
-                                        userName: "user",
-                                        avatar: "https://trunkey2003.github.io/general-img/default-profile-pic.jpg",
-                                        email: "user@user.com",
-                                        fullName: "user",
-                                        phone: "0912345678",
-                                        address: "number street, ward, city, country",
-                                    }
+                                    exampleUser
                                 ]
                             }
                         }
+                    },
+                    403: {
+                        description: "Forbidden",
+                        content: {}
+                    },
+                    503: {
+                        description: "Service Unavailable",
+                        content: {}
+                    }
+                }
+            }
+        },
+        "/api/v1/users/me": {
+            get: {
+                tags: ["users"],
+                description: "Get current user by cookie",
+                responses: {
+                    200: {
+                        description: "Success",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    $ref: "#/components/schemas/User",
+                                },
+                                example: exampleUser
+                            }
+                        }
+                    },
+                    401 : {
+                        description: "Unauthorized",
+                        content: {}
+                    },
+                    503: {
+                        description: "Service Unavailable",
+                        content: {}
                     }
                 }
             }
