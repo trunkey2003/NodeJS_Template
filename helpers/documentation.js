@@ -101,6 +101,111 @@ const swaggerDocumentation = {
                     }
                 }
             }
+        },
+        "/api/v1/users/sign-in": {
+            post: {
+                tags: ["users"],
+                description: "Get current user by cookie",
+                requestBody:{
+                    description: "Sign in",
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    userName : { type: 'string', minlength: 3, maxlength: 20 },
+                                    password : { type: 'string', minlength: 3, maxlength: 20 }
+                                }
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    200: {
+                        description: "Success",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    $ref: "#/components/schemas/User",
+                                },
+                                example: exampleUser
+                            }
+                        },
+                        headers:{
+                            "Set-Cookie": {
+                                description: "JWT Token",
+                                schema:{
+                                    type: 'string',
+                                    example:"token=token; Path=/; HttpOnly"
+                                }
+                            }
+                        }
+                    },
+                    401 : {
+                        description: "Unauthorized",
+                        content: {}
+                    },
+                    503: {
+                        description: "Service Unavailable",
+                        content: {}
+                    }
+                }
+            }
+        },
+        "/api/v1/users/sign-up": {
+            post: {
+                tags: ["users"],
+                description: "Get current user by cookie",
+                requestBody:{
+                    description: "Sign in",
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    userName : { type: 'string', minlength: 3, maxlength: 20, required: true},
+                                    email: { type: 'string', minlength: 3, maxlength: 50, required: true},
+                                    phone: { type: 'string',  minlength: 3, maxlength: 20, required: true },
+                                    password : { type: 'string', minlength: 3, maxlength: 20, required: true},
+                                    autoSignIn: { type: 'boolean', default: false }
+                                }
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    200: {
+                        description: "Success",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    $ref: "#/components/schemas/User",
+                                },
+                                example: exampleUser
+                            }
+                        },
+                        headers:{
+                            "Set-Cookie": {
+                                description: "JWT Token",
+                                schema:{
+                                    type: 'string',
+                                    example:"token=token; Path=/; HttpOnly"
+                                }
+                            }
+                        }
+                    },
+                    401 : {
+                        description: "Unauthorized",
+                        content: {}
+                    },
+                    503: {
+                        description: "Service Unavailable",
+                        content: {}
+                    }
+                }
+            }
         }
     }
 }
