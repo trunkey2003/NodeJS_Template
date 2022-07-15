@@ -105,7 +105,7 @@ const swaggerDocumentation = {
         "/api/v1/users/sign-in": {
             post: {
                 tags: ["users"],
-                description: "Get current user by cookie",
+                description: "Sign in",
                 requestBody:{
                     description: "Sign in",
                     required: true,
@@ -137,7 +137,7 @@ const swaggerDocumentation = {
                                 description: "JWT Token",
                                 schema:{
                                     type: 'string',
-                                    example:"token=token; Path=/; HttpOnly"
+                                    example:"token=token; Path=/;max-age=3600000*24*7; HttpOnly"
                                 }
                             }
                         }
@@ -156,9 +156,9 @@ const swaggerDocumentation = {
         "/api/v1/users/sign-up": {
             post: {
                 tags: ["users"],
-                description: "Get current user by cookie",
+                description: "Sign up",
                 requestBody:{
-                    description: "Sign in",
+                    description: "New user",
                     required: true,
                     content: {
                         "application/json": {
@@ -191,7 +191,7 @@ const swaggerDocumentation = {
                                 description: "JWT Token",
                                 schema:{
                                     type: 'string',
-                                    example:"token=token; Path=/; HttpOnly"
+                                    example:"token=token; Path=/;max-age=3600000*24*7; HttpOnly"
                                 }
                             }
                         }
@@ -199,6 +199,30 @@ const swaggerDocumentation = {
                     401 : {
                         description: "Unauthorized",
                         content: {}
+                    },
+                    503: {
+                        description: "Service Unavailable",
+                        content: {}
+                    }
+                }
+            }
+        },
+        "/api/v1/users/sign-out": {
+            delete: {
+                tags: ["users"],
+                description: "Sign out",
+                responses: {
+                    200: {
+                        description: "Success",
+                        headers:{
+                            "Set-Cookie": {
+                                description: "JWT Token",
+                                schema:{
+                                    type: 'string',
+                                    example:"token=goodbye; Path=/;max-age=0; HttpOnly"
+                                }
+                            }
+                        }
                     },
                     503: {
                         description: "Service Unavailable",

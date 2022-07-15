@@ -9,7 +9,7 @@ const swaggerDocumentation = require('./helpers/documentation');
 
 dotenv.config();
 
-const apiRouter = require('./app/routes/api.v1.routes');
+const apiRouter = require('./app/routes/api.routes');
 
 const app = express();
 app.use(cors({origin: [process.env.CLIENT_HOSTNAME_1]}));
