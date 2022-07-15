@@ -1,4 +1,5 @@
 const exampleUser = {
+    _id : "5e8f8f8f8f8f8f8f8f8f8f8f",
     userName: "user",
     avatar: "https://trunkey2003.github.io/general-img/default-profile-pic.jpg",
     email: "user@user.com",
@@ -68,8 +69,8 @@ const swaggerDocumentation = {
                         description: "Forbidden",
                         content: {}
                     },
-                    503: {
-                        description: "Service Unavailable",
+                    500: {
+                        description: "Internal Server Error",
                         content: {}
                     }
                 }
@@ -95,8 +96,8 @@ const swaggerDocumentation = {
                         description: "Unauthorized",
                         content: {}
                     },
-                    503: {
-                        description: "Service Unavailable",
+                    500: {
+                        description: "Internal Server Error",
                         content: {}
                     }
                 }
@@ -115,7 +116,8 @@ const swaggerDocumentation = {
                                 type: 'object',
                                 properties: {
                                     userName : { type: 'string', minlength: 3, maxlength: 20 },
-                                    password : { type: 'string', minlength: 3, maxlength: 20 }
+                                    password : { type: 'string', minlength: 3, maxlength: 20 },
+                                    rememberMe: { type: 'boolean', default: false },
                                 }
                             }
                         }
@@ -147,7 +149,7 @@ const swaggerDocumentation = {
                         content: {}
                     },
                     503: {
-                        description: "Service Unavailable",
+                        description: "Internal Server Error",
                         content: {}
                     }
                 }
@@ -196,12 +198,12 @@ const swaggerDocumentation = {
                             }
                         }
                     },
-                    401 : {
-                        description: "Unauthorized",
+                    409 : {
+                        description: "Username or email already exists",
                         content: {}
                     },
-                    503: {
-                        description: "Service Unavailable",
+                    500: {
+                        description: "Internal Server Error",
                         content: {}
                     }
                 }
@@ -212,7 +214,7 @@ const swaggerDocumentation = {
                 tags: ["users"],
                 description: "Sign out",
                 responses: {
-                    200: {
+                    205: {
                         description: "Success",
                         headers:{
                             "Set-Cookie": {
@@ -224,8 +226,8 @@ const swaggerDocumentation = {
                             }
                         }
                     },
-                    503: {
-                        description: "Service Unavailable",
+                    500: {
+                        description: "Internal Server Error",
                         content: {}
                     }
                 }

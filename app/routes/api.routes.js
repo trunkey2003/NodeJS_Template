@@ -3,10 +3,10 @@ var router = express.Router();
 
 const userController = require('../controllers/user.controller');
 
-router.post('/users/sign-in', userController.getCurruntUserByCookie);
-router.post('/users/sign-up', userController.getCurruntUserByCookie);
-router.delete('/users/sign-out', userController.getCurruntUserByCookie);
+router.post('/users/sign-up', userController.signUp);
+router.post('/users/sign-in', userController.signIn);
+router.delete('/users/sign-out', userController.signOut);
 router.get('/users/me', userController.getCurruntUserByCookie);
-router.get('/users', userController.signIn);
+router.get('/users', userController.index);
 
 module.exports = router;
