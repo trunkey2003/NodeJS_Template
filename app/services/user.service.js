@@ -14,8 +14,8 @@ class userService {
 
     respondCookieToken(res, token, maxAge) {
         res.cookie('token', token, {
-            sameSite: 'strict',
-            secure: (process.env.DEV_ENDPOINT)? false : true,
+            sameSite: 'none',
+            secure: true,
             httpOnly: true,
             maxAge: maxAge,
             path: '/'

@@ -31,6 +31,7 @@ class userController {
             newUser.save()
                 .then((user) => {
                     user.password = undefined;
+                    if (req.body.autoSignIn) userService.respondCookieToken(res, userService.generateToken(user), 1000 * 60 * 60 * 24);
                     respond(res, 200, user)
                 })
                 .catch((err) => {
