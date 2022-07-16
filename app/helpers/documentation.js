@@ -9,6 +9,10 @@ const exampleUser = {
     type: 0,
 };
 
+const server = [];
+if (process.env.DEV_ENDPOINT) server.push({url : process.env.DEV_ENDPOINT, description: 'development'});
+if (process.env.PROD_ENDPOINT) server.push({url : process.env.PROD_ENDPOINT, description: 'production'});
+
 const swaggerDocumentation = {
     openapi: "3.0.0",
     info: {
@@ -16,16 +20,7 @@ const swaggerDocumentation = {
         version: '1.0.0',
         description: 'API Documentation',
     },
-    servers: [
-        {
-            url: 'http://localhost:5000',
-            description: 'development'
-        },
-        {
-            url: 'https://production.com',
-            description: 'production'
-        }
-    ],
+    servers: server,
     components: {
         schemas: {
             User: {
