@@ -5,10 +5,10 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const swaggerDoc = require('swagger-ui-express');
-const swaggerDocumentation = require('./helpers/documentation');
 
 dotenv.config();
 
+const swaggerDocumentation = require('./app/helpers/documentation');
 const apiRouter = require('./app/routes/api.routes');
 
 const app = express();
