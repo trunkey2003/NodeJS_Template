@@ -9,6 +9,16 @@ const exampleUser = {
     type: 0,
 };
 
+const exampleProduct = {
+    _id : "5e8f8f8f8f8f8f8f8f8f8f8f",
+    name: "product",
+    price: 100000,
+    description: "product",
+    image: "https://trunkey2003.github.io/general-img/no-image.jpg",
+    category: "other",
+    quantity: 0,
+}
+
 const server = [];
 if (process.env.DEV_ENDPOINT) server.push({url : process.env.DEV_ENDPOINT, description: 'development'});
 if (process.env.PROD_ENDPOINT) server.push({url : process.env.PROD_ENDPOINT, description: 'production'});
@@ -36,10 +46,22 @@ const swaggerDocumentation = {
                     type: { type: 'number', default: 0 }, // 0: user, 1: admin
                 }
             },
+            Product:{
+                type: 'object',
+                properties: {
+                    _id: { type: 'string', format: 'objectid' },
+                    name: { type: 'string', minlength: 3, maxlength: 50 },
+                    price: { type: 'number', required: true },
+                    description: { type: 'string', minlength: 3, maxlength: 500 },
+                    image: { type: 'string', required: true, default: "https://trunkey2003.github.io/general-img/no-image.jpg" },
+                    category: { type: 'string', required: true, default: 'other' },
+                    quantity: { type: 'number', required: true, default: 0 },
+                }
+            }
         }
     },
     paths: {
-        "/api/v1/users": {
+        "/api/v1/user": {
             get: {
                 tags: ["users"],
                 description: "List of the users, requires admin role",
@@ -71,7 +93,7 @@ const swaggerDocumentation = {
                 }
             }
         },
-        "/api/v1/users/me": {
+        "/api/v1/user/me": {
             get: {
                 tags: ["users"],
                 description: "Get current user by cookie",
@@ -98,7 +120,7 @@ const swaggerDocumentation = {
                 }
             }
         },
-        "/api/v1/users/sign-in": {
+        "/api/v1/user/sign-in": {
             post: {
                 tags: ["users"],
                 description: "Sign in",
@@ -150,7 +172,7 @@ const swaggerDocumentation = {
                 }
             }
         },
-        "/api/v1/users/sign-up": {
+        "/api/v1/user/sign-up": {
             post: {
                 tags: ["users"],
                 description: "Sign up",
@@ -204,7 +226,7 @@ const swaggerDocumentation = {
                 }
             }
         },
-        "/api/v1/users/sign-out": {
+        "/api/v1/user/sign-out": {
             delete: {
                 tags: ["users"],
                 description: "Sign out",
@@ -227,7 +249,35 @@ const swaggerDocumentation = {
                     }
                 }
             }
-        }
+        },
+        "/api/v1/product": {
+            get: {
+                tags: ["products"],
+                description: "List of the products",
+                responses: {
+                    200: {
+                        description: "Success",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: 'array',
+                                    items: {
+                                        $ref: "#/components/schemas/Product"
+                                    }
+                                },
+                                example: [
+                                    exampleProduct
+                                ]
+                            }
+                        }
+                    },
+                    500: {
+                        description: "Internal Server Error",
+                        content: {}
+                    }
+                }
+            }
+        },
     }
 }
 

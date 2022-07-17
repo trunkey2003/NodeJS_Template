@@ -19,7 +19,11 @@ class userController {
     }
 
     getCurruntUserByCookie(req, res, next) {
-        respond(res, 200, userService.readCookieToken(req, res));
+        const data = userService.readCookieToken(req, res);
+        if (data) 
+            respond(res, 200, data);
+        else 
+            respond(res, 401, { message: "Unauthorized" });
     }
 
     async signUp(req, res, next) {
