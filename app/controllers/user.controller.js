@@ -51,8 +51,9 @@ class userController {
 
     signIn(req, res, next) {
         try {
-            userModel.findOne({ username: req.body.username })
+            userModel.findOne({ userName: req.body.userName })
                 .then(async (user) => {
+                    console.log(user);
                     if (!user) {
                         respond(res, 404, { message: "User not found" });
                         return;
