@@ -11,5 +11,6 @@ router.get('/user/me', userController.getCurruntUserByCookie);
 router.get('/user', userController.index);
 
 router.get('/product', productController.index);
+router.post('/product', productController.addProduct);
 
 module.exports = router;
